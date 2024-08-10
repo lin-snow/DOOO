@@ -1,10 +1,11 @@
 package main
 
 import (
-	"fmt"
+	"github.com/lin-snow/dooo/server"
 )
 
 func main() {
-	fmt.Println("Hello DOOO!")
+	// Start the server
+	server.Start()
 
 }
