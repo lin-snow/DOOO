@@ -6,6 +6,7 @@ package model
 import (
 	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"gorm.io/gorm"
 )
 
@@ -32,4 +33,14 @@ type User struct {
 
 	// Foreign key
 	Todos []Todo `json:"todos"`
+}
+
+// JWT Model
+// MySigningKey
+var MySigningKey = []byte("DOOOOOOOOOOOOOOO!")
+
+// Claim model
+type MyClaims struct {
+	Username string `json:"username"`
+	jwt.RegisteredClaims
 }

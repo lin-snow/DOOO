@@ -13,11 +13,13 @@ import (
 func Router(r *gin.Engine, db *gorm.DB) *gin.Engine {
 	// User Sign Up
 	r.POST("/signup", func(ctx *gin.Context) {
-		user.CreateUser(ctx, db)
+		user.Register(ctx, db)
 	})
 
-	// User Sign In
-
+	// User Login
+	r.POST("/login", func(ctx *gin.Context) {
+		user.Login(ctx, db)
+	})
 	// User Sign Out
 
 	// User Update
