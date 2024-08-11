@@ -30,7 +30,7 @@ func Start() {
 	r := gin.Default()
 
 	// CORS
-	cors.SolveCORS(r)
+	r.Use(cors.SolveCORS())
 
 	// API Router
 	r = api.Router(r, db)

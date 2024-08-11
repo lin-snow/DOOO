@@ -3,8 +3,11 @@ package auth
 import (
 	"fmt"
 	"log"
+	"net/http"
+	"strings"
 	"time"
 
+	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/lin-snow/dooo/internal/model"
 )
@@ -26,26 +29,99 @@ func CreateClaims(user model.User) jwt.Claims {
 	return claim
 }
 
-// Create Token
+// Create Token (The token will be send to the client)
 func GenerateToken(claim jwt.Claims) (string, error) {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
-	tokenString, err := token.SignedString(model.MySigningKey)
+	/*
+		NewWithClaims contains Header & Payload
+	*/
+	part := jwt.NewWithClaims(jwt.SigningMethodHS256, claim)
+	/*
+		SignedString contains Generate Signature
+		and Link the Header & Payload & Signature together
+		and return the tokenString
+	*/
+	token, err := part.SignedString(model.MySigningKey)
 	if err != nil {
 		return "", err
 	}
-	return tokenString, nil
+	return token, nil
 }
 
-// Parse Token
-func ParseToken(claim jwt.Claims, tokenString string) {
-	token, err := jwt.ParseWithClaims(tokenString, claim, func(token *jwt.Token) (interface{}, error) {
+// Parse Token (The token will be received from the client)
+func ParseToken(token string) (*model.MyClaims, error) {
+
+	/*
+		Parse the token to get the claims.
+		The process contains getting the signature from the token
+	*/
+	parsedtoken, err := jwt.ParseWithClaims(token, &model.MyClaims{}, func(parsedtoken *jwt.Token) (interface{}, error) {
 		return model.MySigningKey, nil
 	})
-	if err != nil {
+
+	// Check the token
+	if err != nil { // If the token is invalid
 		log.Fatal(err)
-	} else if claims, ok := token.Claims.(*model.MyClaims); ok {
+	} else if claims, ok := parsedtoken.Claims.(*model.MyClaims); ok { // verify the signature
 		fmt.Println(claims.Username, claims.RegisteredClaims.Issuer)
+		return claims, nil
 	} else {
-		log.Fatal("unknown claims type, cannot proceed")
+		log.Fatal("unknown claims type, cannot proceed") // If the token is invalid
+	}
+
+	return nil, nil
+}
+
+// JWT Auth Middleware
+func JWTAuth() gin.HandlerFunc {
+	return func(ctx *gin.Context) {
+		// Get the Authorization from the header
+		/*
+			auth is token and contains the Header & Payload & Signature
+
+		*/
+		auth := ctx.Request.Header.Get("Authorization")
+
+		// Check the auth
+		if auth == "" {
+			// auth is blank
+			ctx.JSON(http.StatusOK, gin.H{
+				"Message": "The Auth is Blank!!!!",
+				"code":    400,
+				"data":    gin.H{},
+			})
+
+			// Stop the request
+			ctx.Abort()
+			return
+		} else {
+			// Authorization is not blank
+			parts := strings.SplitN(auth, " ", 2)
+			if !(len(parts) == 2 && parts[0] == "Bearer") {
+				ctx.JSON(http.StatusOK, gin.H{
+					"Message": "The Auth is Invalid!!!!",
+					"code":    400,
+					"data":    gin.H{},
+				})
+				ctx.Abort()
+				return
+			}
+
+			// Parse the token
+			mc, err := ParseToken(parts[1])
+			if err != nil {
+				ctx.JSON(http.StatusOK, gin.H{
+					"Message": "The Token is Invalid!!!!",
+					"code":    400,
+					"data":    gin.H{},
+				})
+				ctx.Abort()
+				return
+			}
+
+			// Auth is valid
+			// Set the claims to the context
+			ctx.Set("username", mc.Username)
+			ctx.Next()
+		}
 	}
 }

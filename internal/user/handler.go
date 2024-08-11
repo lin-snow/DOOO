@@ -6,6 +6,7 @@ package user
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/lin-snow/dooo/internal/model"
+	"github.com/lin-snow/dooo/pkg/auth"
 	"gorm.io/gorm"
 )
 
@@ -53,12 +54,16 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 		// Check the password
 		if userdata.Password == tempuser.Password {
 			//  Password is correct
+			// Create Claim and Generate Token
+			tokenString, _ := auth.GenerateToken(auth.CreateClaims(tempuser))
 
-			// Login Successfully
+			// Login Successfully && Return the token
 			ctx.JSON(200, gin.H{
 				"Message": "Login Successfully!",
 				"code":    200,
-				"data":    userdata,
+				"data": gin.H{
+					"token": tokenString, // Send the token to the client
+				},
 			})
 
 		} else {
