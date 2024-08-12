@@ -44,3 +44,17 @@ type MyClaims struct {
 	Username string `json:"username"`
 	jwt.RegisteredClaims
 }
+
+// UserToUpdate Model
+type UserToUpdate struct {
+	Username string `json:"username,omitempty"`
+	Nickname string `json:"nickname,omitempty"`
+	Password string `json:"password,omitempty"`
+	Email    string `json:"email,omitempty"`
+}
+
+// Define the delete detail
+type DeleteDetail struct {
+	Usertodel string `json:"usertodel"`
+	Deldata   bool   `json:"deldata"`
+}
