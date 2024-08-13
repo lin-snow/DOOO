@@ -55,12 +55,22 @@ func Router(r *gin.Engine, db *gorm.DB) *gin.Engine {
 		})
 
 		// Todo Query
-		// Query All
-		// Query By Pagination
+		api.GET("/querytodo", func(ctx *gin.Context) {
+			// Query Todo
+			todo.QueryTodo(ctx, db)
+		})
 
 		// Todo Update
+		api.PUT("/updatetodo", func(ctx *gin.Context) {
+			// Update Todo
+			todo.UpdateTodo(ctx, db)
+		})
 
 		// Todo Delete
+		api.DELETE("/deletetodo", func(ctx *gin.Context) {
+			// Delete Todo
+			todo.DeleteTodo(ctx, db)
+		})
 
 	}
 

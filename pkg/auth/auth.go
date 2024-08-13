@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/lin-snow/dooo/internal/model"
+	"gorm.io/gorm"
 )
 
 // Create claims
@@ -86,7 +87,7 @@ func JWTAuth() gin.HandlerFunc {
 			// auth is blank
 			ctx.JSON(http.StatusOK, gin.H{
 				"Message": "The Auth is Blank!!!!",
-				"code":    400,
+				"code":    model.ERR_AUTH_NOT_FOUND,
 				"data":    gin.H{},
 			})
 
@@ -99,7 +100,7 @@ func JWTAuth() gin.HandlerFunc {
 			if !(len(parts) == 2 && parts[0] == "Bearer") {
 				ctx.JSON(http.StatusOK, gin.H{
 					"Message": "The Auth is Invalid!!!!",
-					"code":    400,
+					"code":    model.ERR_AUTH_INVALID,
 					"data":    gin.H{},
 				})
 				ctx.Abort()
@@ -111,7 +112,7 @@ func JWTAuth() gin.HandlerFunc {
 			if err != nil {
 				ctx.JSON(http.StatusOK, gin.H{
 					"Message": "The Token is Invalid!!!!",
-					"code":    400,
+					"code":    model.ERR_TOKEN_INVALID,
 					"data":    gin.H{},
 				})
 				ctx.Abort()
@@ -124,4 +125,16 @@ func JWTAuth() gin.HandlerFunc {
 			ctx.Next()
 		}
 	}
+}
+
+// GET CURRENT USER
+func GetCurrentUser(ctx *gin.Context, db *gorm.DB) model.User {
+	// Get the current user
+	curuser, _ := ctx.Get("username")
+	// Get the current user data
+	var userdata model.User
+	db.Model(&model.User{}).Where("username = ?", curuser).First(&userdata)
+
+	// Return the current user data
+	return userdata
 }

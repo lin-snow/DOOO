@@ -4,8 +4,6 @@ user package contains the user model and handler
 package user
 
 import (
-	"fmt"
-
 	"github.com/gin-gonic/gin"
 	"github.com/lin-snow/dooo/internal/model"
 	"github.com/lin-snow/dooo/pkg/auth"
@@ -19,15 +17,46 @@ func Register(ctx *gin.Context, db *gorm.DB) {
 	if err != nil {
 		ctx.JSON(200, gin.H{
 			"Message": "Failed with JSON!",
-			"code":    400,
+			"code":    model.ERR_JSON,
 			"data":    gin.H{},
 		})
 	} else {
+		// Check the user data
+		if userdata.Username == "" || userdata.Password == "" || userdata.Email == "" || userdata.Nickname == "" {
+			ctx.JSON(200, gin.H{
+				"Message": "The user data is blank!",
+				"code":    model.ERR_JSON,
+				"data":    gin.H{},
+			})
+			return
+		}
+
+		// is the user exist
+		var tempuser model.User
+		db.Where("username = ?", userdata.Username).First(&tempuser)
+		if tempuser.ID != 0 {
+			ctx.JSON(200, gin.H{
+				"Message": "The user is exist!",
+				"code":    model.ERR_USERNAME_EXIST,
+				"data":    gin.H{},
+			})
+			return
+		}
+		db.Where("email = ?", userdata.Email).First(&tempuser)
+		if tempuser.ID != 0 {
+			ctx.JSON(200, gin.H{
+				"Message": "The email is exist!",
+				"code":    model.ERR_EMAIL_EXIST,
+				"data":    gin.H{},
+			})
+			return
+		}
+
 		db.Create(&userdata)
 
 		ctx.JSON(200, gin.H{
 			"Message": "Create Successfully!",
-			"code":    200,
+			"code":    model.SUCCESS,
 			"data":    userdata,
 		})
 	}
@@ -49,7 +78,7 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 		// User not found
 		ctx.JSON(200, gin.H{
 			"Message": "User not found!",
-			"code":    400,
+			"code":    model.ERR_USER_NOT_FOUND,
 			"data":    gin.H{},
 		})
 	} else {
@@ -62,7 +91,7 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 			// Login Successfully && Return the token
 			ctx.JSON(200, gin.H{
 				"Message": "Login Successfully!",
-				"code":    200,
+				"code":    model.SUCCESS,
 				"data": gin.H{
 					"token": tokenString, // Send the token to the client
 				},
@@ -72,7 +101,7 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 			// Password is wrong
 			ctx.JSON(200, gin.H{
 				"Message": "Oh no! Password is wrong!",
-				"code":    400,
+				"code":    model.ERR_PASSWORD_WRONG,
 				"data":    userdata,
 			})
 		}
@@ -85,20 +114,20 @@ func UpdateUsername(ctx *gin.Context, db *gorm.DB) {
 	var new model.UserToUpdate
 	err := ctx.ShouldBindBodyWithJSON(&new)
 	if err != nil {
-		fmt.Println("Failed with JSON!!!")
+		ctx.JSON(200, gin.H{
+			"Message": "Failed with JSON!!!",
+			"code":    model.ERR_JSON,
+			"data":    gin.H{},
+		})
 		panic(err)
 	}
-
-	ctx.JSON(200, gin.H{
-		"Message": new.Username,
-	})
 
 	// Is new username is blank
 	if new.Username == "" {
 		// The new username is blank
 		ctx.JSON(200, gin.H{
 			"Message": "The new username is blank!",
-			"code":    400,
+			"code":    model.ERR_USERNAME_BLANK,
 			"data":    gin.H{},
 		})
 		return
@@ -110,7 +139,7 @@ func UpdateUsername(ctx *gin.Context, db *gorm.DB) {
 		// The new username is the same
 		ctx.JSON(200, gin.H{
 			"Message": "The new username is the same!",
-			"code":    400,
+			"code":    model.ERR_USERNAME_SAME,
 			"data":    gin.H{},
 		})
 		return
@@ -123,7 +152,7 @@ func UpdateUsername(ctx *gin.Context, db *gorm.DB) {
 		// The new username is exist
 		ctx.JSON(200, gin.H{
 			"Message": "The new username is exist!",
-			"code":    400,
+			"code":    model.ERR_USERNAME_EXIST,
 			"data":    gin.H{},
 		})
 		return
@@ -133,7 +162,7 @@ func UpdateUsername(ctx *gin.Context, db *gorm.DB) {
 	db.Model(&model.User{}).Where("username = ?", curname).Update("username", new.Username)
 	ctx.JSON(200, gin.H{
 		"Message": "Update Successfully!",
-		"code":    200,
+		"code":    model.SUCCESS,
 		"data": gin.H{
 			"OldUsername": curname,
 			"NewUsername": new.Username,
@@ -150,7 +179,7 @@ func UpdatePassword(ctx *gin.Context, db *gorm.DB) {
 	if err != nil {
 		ctx.JSON(200, gin.H{
 			"Message": "Failed with JSON!!!",
-			"code":    400,
+			"code":    model.ERR_JSON,
 			"data":    gin.H{},
 		})
 		panic(err)
@@ -161,31 +190,29 @@ func UpdatePassword(ctx *gin.Context, db *gorm.DB) {
 		// The new password is blank
 		ctx.JSON(200, gin.H{
 			"Message": "The new password is blank!",
-			"code":    400,
+			"code":    model.ERR_PASSWORD_BLANK,
 			"data":    gin.H{},
 		})
 		return
 	}
 
 	// Is new password
-	var tempuser model.User
-	curname, _ := ctx.Get("username")
-	db.Where("username = ?", curname).First(&tempuser)
+	tempuser := auth.GetCurrentUser(ctx, db)
 	if new.Password == tempuser.Password {
 		// The new password is the same
 		ctx.JSON(200, gin.H{
 			"Message": "The new password is the same!",
-			"code":    400,
+			"code":    model.ERR_PASSWORD_SAME,
 			"data":    gin.H{},
 		})
 		return
 	}
 
 	// Update the password
-	db.Model(&model.User{}).Where("username = ?", curname).Update("password", new.Password)
+	db.Model(&model.User{}).Where("username = ?", tempuser.Username).Update("password", new.Password)
 	ctx.JSON(200, gin.H{
 		"Message": "Update Successfully!",
-		"code":    200,
+		"code":    model.SUCCESS,
 		"data": gin.H{
 			"NewPassword": new.Password,
 		},
@@ -207,21 +234,19 @@ func UpdateEmail(ctx *gin.Context, db *gorm.DB) {
 		// The new email is blank
 		ctx.JSON(200, gin.H{
 			"Message": "The new email is blank!",
-			"code":    400,
+			"code":    model.ERR_EMAIL_BLANK,
 			"data":    gin.H{},
 		})
 		return
 	}
 
 	// Is new email exist or the same
-	var tempuser model.User
-	curname, _ := ctx.Get("username")
-	db.Where("username = ?", curname).First(&tempuser)
+	tempuser := auth.GetCurrentUser(ctx, db)
 	if new.Email == tempuser.Email {
 		// The new email is the same
 		ctx.JSON(200, gin.H{
 			"Message": "The new email is the same!",
-			"code":    400,
+			"code":    model.ERR_EMAIL_SAME,
 			"data":    gin.H{},
 		})
 		return
@@ -234,17 +259,17 @@ func UpdateEmail(ctx *gin.Context, db *gorm.DB) {
 		// The new email is exist
 		ctx.JSON(200, gin.H{
 			"Message": "The new email is exist!",
-			"code":    400,
+			"code":    model.ERR_EMAIL_EXIST,
 			"data":    gin.H{},
 		})
 		return
 	}
 
 	// Update the email
-	db.Model(&model.User{}).Where("username = ?", curname).Update("email", new.Email)
+	db.Model(&model.User{}).Where("username = ?", tempuser.Username).Update("email", new.Email)
 	ctx.JSON(200, gin.H{
 		"Message": "Update Successfully!",
-		"code":    200,
+		"code":    model.SUCCESS,
 		"data": gin.H{
 			"NewEmail": new.Email,
 		},
@@ -264,7 +289,7 @@ func UpdateNickname(ctx *gin.Context, db *gorm.DB) {
 		// The new nickname is blank
 		ctx.JSON(200, gin.H{
 			"Message": "The new nickname is blank!",
-			"code":    400,
+			"code":    model.ERR_NICKNAME_BLANK,
 			"data":    gin.H{},
 		})
 		return
@@ -274,7 +299,7 @@ func UpdateNickname(ctx *gin.Context, db *gorm.DB) {
 		db.Model(&model.User{}).Where("username = ?", curname).Update("nickname", new.Nickname)
 		ctx.JSON(200, gin.H{
 			"Message": "Update Successfully!",
-			"code":    200,
+			"code":    model.SUCCESS,
 			"data":    new.Nickname,
 		})
 	}
@@ -301,7 +326,7 @@ func DeleteAccount(ctx *gin.Context, db *gorm.DB) {
 		// Current user is not exist
 		ctx.JSON(200, gin.H{
 			"Message": "The user is not exist!",
-			"code":    400,
+			"code":    model.ERR_USER_NOT_FOUND,
 			"data":    gin.H{},
 		})
 		return
@@ -311,7 +336,7 @@ func DeleteAccount(ctx *gin.Context, db *gorm.DB) {
 		// The user is not the same
 		ctx.JSON(200, gin.H{
 			"Message": "The user is not the same!",
-			"code":    400,
+			"code":    model.ERR_USER_NOT_SAME,
 			"data":    gin.H{},
 		})
 		return
@@ -327,7 +352,7 @@ func DeleteAccount(ctx *gin.Context, db *gorm.DB) {
 
 		ctx.JSON(200, gin.H{
 			"Message": "Delete Successfully!",
-			"code":    200,
+			"code":    model.SUCCESS,
 			"data": gin.H{
 				"DeletedUser": username,
 				"DelData":     deletedata.Deldata,
