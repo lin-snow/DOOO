@@ -41,4 +41,5 @@ func ConnectDB() (*gorm.DB, error) {
 func MigrateDB(db *gorm.DB) {
 	db.AutoMigrate(&model.Todo{})
 	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.Category{})
 }

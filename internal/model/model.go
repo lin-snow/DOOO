@@ -41,6 +41,11 @@ const (
 	ERR_AUTH_NOT_FOUND = 4001
 	ERR_AUTH_INVALID   = 4002
 	ERR_TOKEN_INVALID  = 4003
+
+	// Code For Error (CATEGORY)
+	ERR_CATEGORYNAME_BLANK = 5001
+	ERR_CATEGORY_EXIST     = 5002
+	ERR_CATEGORY_NOT_FOUND = 5003
 )
 
 // Toda Model
@@ -52,7 +57,8 @@ type Todo struct {
 	DueDate     time.Time `json:"dueDate"`
 
 	// Foreign key
-	UserID uint `json:"userId" gorm:"not null"`
+	UserID     uint `json:"userId" gorm:"not null"`
+	CategoryID uint `json:"categoryId"`
 }
 
 // User Model
@@ -66,6 +72,15 @@ type User struct {
 
 	// Foreign key
 	Todos []Todo `json:"todos"`
+}
+
+// Category Model
+type Category struct {
+	gorm.Model        // ID, CreatedAt, UpdatedAt, DeletedAt
+	Name       string `json:"name" gorm:"not null, default:'default'"`
+
+	// Foreign key
+	UserID uint `json:"userId" gorm:"not null"`
 }
 
 // JWT Model
