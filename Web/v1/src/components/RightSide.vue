@@ -1,0 +1,67 @@
+<template>
+    <div class="right-side py-3 px-3 ">
+        <div>
+            <div class="grid place-items-center mb-4">
+            <el-button round size="large" color="#66b1ff" class="shadow-xl bg-sky-200 w-24">
+                <el-icon><User /></el-icon>
+                <span> User </span>
+            </el-button>
+        </div>
+        </div>
+
+        <div >
+                    <el-image :src="src" :fit="fill" class="w-28 border rounded-lg">
+                        <template #placeholder>
+                            <div class="image-slot preview-src-list">Loading<span class="dot">...</span></div>
+                        </template>
+                    </el-image>
+        </div>
+    </div>
+</template>
+
+<script setup lang="ts">
+import { User } from '@element-plus/icons-vue'
+
+const src = 'stevejob.webp'
+
+</script>
+
+<style scoped>
+.demo-image__placeholder .block {
+    padding: 30px 0;
+    text-align: center;
+    display: inline-block;
+    width: 49%;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.demo-image__placeholder .demonstration {
+    display: block;
+    color: var(--el-text-color-secondary);
+    font-size: 14px;
+    margin-bottom: 20px;
+}
+
+.demo-image__placeholder .el-image {
+    padding: 0 5px;
+    max-width: 300px;
+    max-height: 200px;
+}
+
+.demo-image__placeholder.image-slot {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    background: var(--el-fill-color-light);
+    color: var(--el-text-color-secondary);
+    font-size: 14px;
+}
+
+.demo-image__placeholder .dot {
+    animation: dot 2s infinite steps(3, start);
+    overflow: hidden;
+}
+</style>

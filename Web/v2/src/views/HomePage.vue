@@ -3,7 +3,9 @@
         <div class="flex flex-nowrap w-auto h-auto gap-11">
             <SideBar />
             <div class="bg-red-700 h-auto">
-                <Header />
+                <div>
+                    <CategoryComp />
+                </div>
                 <Content />
             </div>
             <RightSide/>
@@ -14,9 +16,10 @@
 
 <script setup lang="ts">
 import SideBar from '@/components/SideBar.vue';
-import Header from '@/components/Header.vue';
-import Content from '@/components/Content.vue';
+import CategoryComp from '@/components/CategoryComp.vue';
+import Content from '@/components/CenterContent.vue';
 import RightSide from '@/components/RightSide.vue';
+
 </script>
 
 <style scoped></style>
