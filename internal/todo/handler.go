@@ -24,6 +24,8 @@ func AddTodo(ctx *gin.Context, db *gorm.DB) {
 			"code":    model.ERR_JSON,
 			"data":    tododata,
 		})
+
+		return
 	}
 
 	// Check the todo data

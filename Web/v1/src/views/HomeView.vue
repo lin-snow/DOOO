@@ -5,10 +5,8 @@ import RightSide from '@/components/RightSide.vue'
 </script>
 
 <template>
-<div>
-  <div>
-    <el-container class="max-w-screen-xl h-[65vh] border rounded-xl shadow-2xl ring ring-orange-100 ring-offset-2 ring-red-50 overflow-hidden">
-      <el-aside width="200px" class="bg-orange-50 ">
+  <el-container class="max-w-screen-xl h-[65vh] border rounded-xl shadow-2xl ring ring-orange-100 ring-offset-2 overflow-hidden">
+    <el-aside width="200px" class="bg-orange-50 ">
         <!-- Left Side -->
         <LeftSide />
       </el-aside>
@@ -22,8 +20,5 @@ import RightSide from '@/components/RightSide.vue'
         <!-- Right Side -->
         <RightSide />
       </el-aside>
-    </el-container>
-  </div>
-</div>
-
+  </el-container>  
 </template>

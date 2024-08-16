@@ -48,6 +48,12 @@ func Router(r *gin.Engine, db *gorm.DB) *gin.Engine {
 			user.DeleteAccount(ctx, db)
 		})
 
+		// User Get
+		api.GET("/getuserinfo", func(ctx *gin.Context) {
+			// Get User Info
+			user.GetUserInfo(ctx, db)
+		})
+
 		//==========================(TODO)================================
 		// Todo Create
 		api.POST("/add", func(ctx *gin.Context) {

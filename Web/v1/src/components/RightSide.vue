@@ -2,19 +2,23 @@
     <div class="right-side py-3 px-3 ">
         <div>
             <div class="grid place-items-center mb-4">
-            <el-button round size="large" color="#66b1ff" class="shadow-xl bg-sky-200 w-24">
-                <el-icon><User /></el-icon>
-                <span> User </span>
-            </el-button>
-        </div>
+                <router-link to="/auth" class="router-link">
+                    <el-button round size="large" color="#66b1ff" class="shadow-xl bg-sky-200 w-24">
+                        <el-icon>
+                            <User />
+                        </el-icon>
+                        <span> User </span>
+                    </el-button>
+                </router-link>
+            </div>
         </div>
 
-        <div >
-                    <el-image :src="src" :fit="fill" class="w-28 border rounded-lg">
-                        <template #placeholder>
-                            <div class="image-slot preview-src-list">Loading<span class="dot">...</span></div>
-                        </template>
-                    </el-image>
+        <div>
+            <el-image :src="src" class="w-28 border rounded-lg">
+                <template #placeholder>
+                    <div class="image-slot preview-src-list">Loading<span class="dot">...</span></div>
+                </template>
+            </el-image>
         </div>
     </div>
 </template>
@@ -23,6 +27,8 @@
 import { User } from '@element-plus/icons-vue'
 
 const src = 'stevejob.webp'
+
+
 
 </script>
 

@@ -76,7 +76,7 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 	db.Where("username = ?", userdata.Username).First(&tempuser)
 	if tempuser.ID == 0 {
 		// User not found
-		ctx.JSON(200, gin.H{
+		ctx.JSON(400, gin.H{
 			"Message": "User not found!",
 			"code":    model.ERR_USER_NOT_FOUND,
 			"data":    gin.H{},
@@ -93,19 +93,40 @@ func Login(ctx *gin.Context, db *gorm.DB) {
 				"Message": "Login Successfully!",
 				"code":    model.SUCCESS,
 				"data": gin.H{
-					"token": tokenString, // Send the token to the client
+					"username": tempuser.Username,
+					"nickname": tempuser.Nickname,
+					"email":    tempuser.Email,
+					"token":    tokenString, // Send the token to the client
 				},
 			})
 
 		} else {
 			// Password is wrong
-			ctx.JSON(200, gin.H{
+			ctx.JSON(400, gin.H{
 				"Message": "Oh no! Password is wrong!",
 				"code":    model.ERR_PASSWORD_WRONG,
 				"data":    userdata,
 			})
 		}
 	}
+}
+
+// Get a user data
+func GetUserInfo(ctx *gin.Context, db *gorm.DB) {
+	// Get the logined user data
+	userdata := auth.GetCurrentUser(ctx, db)
+
+	// return the user data
+	ctx.JSON(200, gin.H{
+		"Message": "Get Successfully!",
+		"code":    model.SUCCESS,
+		"data": gin.H{
+			"userid":   userdata.ID,
+			"username": userdata.Username,
+			"nickname": userdata.Nickname,
+			"email":    userdata.Email,
+		},
+	})
 }
 
 // Update a user

@@ -7,6 +7,7 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    AddTodo: typeof import('./src/components/todo/AddTodo.vue')['default']
     CenterContent: typeof import('./src/components/CenterContent.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
@@ -22,15 +23,20 @@ declare module 'vue' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
     ElTableColumn: typeof import('element-plus/es')['ElTableColumn']
     ElTabPane: typeof import('element-plus/es')['ElTabPane']
     ElTabs: typeof import('element-plus/es')['ElTabs']
+    FetchTodos: typeof import('./src/components/todo/FetchTodos.vue')['default']
+    FetchUser: typeof import('./src/components/user/FetchUser.vue')['default']
     LeftSide: typeof import('./src/components/LeftSide.vue')['default']
     MainContent: typeof import('./src/components/MainContent.vue')['default']
     RightSide: typeof import('./src/components/RightSide.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    UserLogin: typeof import('./src/components/user/UserLogin.vue')['default']
+    UserRegister: typeof import('./src/components/user/UserRegister.vue')['default']
   }
 }
