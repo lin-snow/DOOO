@@ -74,9 +74,21 @@ func Router(r *gin.Engine, db *gorm.DB) *gin.Engine {
 		})
 
 		// Todo Delete
-		api.DELETE("/deletetodo", func(ctx *gin.Context) {
+		api.DELETE("/deletetodo/:todoid", func(ctx *gin.Context) {
 			// Delete Todo
 			todo.DeleteTodo(ctx, db)
+		})
+
+		// Todo Finish
+		api.PUT("/markedtodo/:todoid", func(ctx *gin.Context) {
+			// Marked Todo
+			todo.MarkedTodo(ctx, db)
+		})
+
+		// Todo Unfinish
+		api.PUT("/unmarkedtodo/:todoid", func(ctx *gin.Context) {
+			// Unmarked Todo
+			todo.UnmarkedTodo(ctx, db)
 		})
 
 		//==========================(CATEGORY)===========================

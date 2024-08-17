@@ -1,13 +1,11 @@
 <script setup lang="ts">
-
 </script>
 
 <template>
   <div class="flex items-center justify-center h-screen">
-      <RouterView />
+      <router-view></router-view>
   </div>
 </template>
 
 <style scoped>
-
 </style>

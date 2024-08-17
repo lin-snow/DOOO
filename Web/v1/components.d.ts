@@ -9,6 +9,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AddTodo: typeof import('./src/components/todo/AddTodo.vue')['default']
     CenterContent: typeof import('./src/components/CenterContent.vue')['default']
+    EditTodo: typeof import('./src/components/todo/EditTodo.vue')['default']
     ElAside: typeof import('element-plus/es')['ElAside']
     ElAvatar: typeof import('element-plus/es')['ElAvatar']
     ElButton: typeof import('element-plus/es')['ElButton']
@@ -23,6 +24,7 @@ declare module 'vue' {
     ElMenuItemGroup: typeof import('element-plus/es')['ElMenuItemGroup']
     ElRadioButton: typeof import('element-plus/es')['ElRadioButton']
     ElRadioGroup: typeof import('element-plus/es')['ElRadioGroup']
+    ElRow: typeof import('element-plus/es')['ElRow']
     ElScrollbar: typeof import('element-plus/es')['ElScrollbar']
     ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     ElTable: typeof import('element-plus/es')['ElTable']
@@ -36,7 +38,11 @@ declare module 'vue' {
     RightSide: typeof import('./src/components/RightSide.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TodoDetail: typeof import('./src/components/todo/TodoDetail.vue')['default']
     UserLogin: typeof import('./src/components/user/UserLogin.vue')['default']
     UserRegister: typeof import('./src/components/user/UserRegister.vue')['default']
+  }
+  export interface ComponentCustomProperties {
+    vLoading: typeof import('element-plus/es')['ElLoadingDirective']
   }
 }

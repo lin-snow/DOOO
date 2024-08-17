@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { User } from '@element-plus/icons-vue'
 
-const src = 'stevejob.webp'
+const src ='/stevejob.webp'
 
 
 

@@ -118,7 +118,9 @@ func UpdateTodo(ctx *gin.Context, db *gorm.DB) {
 		ctx.JSON(200, gin.H{
 			"Message": "The new todo data has wrong!",
 			"code":    model.ERR_TODO_WRONG,
-			"data":    gin.H{},
+			"data": gin.H{
+				"new": new,
+			},
 		})
 		return
 	}
@@ -135,7 +137,7 @@ func UpdateTodo(ctx *gin.Context, db *gorm.DB) {
 // Delete Todo
 func DeleteTodo(ctx *gin.Context, db *gorm.DB) {
 	// Get the todotodel ID
-	todotodel, _ := strconv.Atoi(ctx.Query("delid"))
+	todotodel := ctx.Param("todoid")
 
 	// Get the Current User
 	curuser := auth.GetCurrentUser(ctx, db)
@@ -144,6 +146,47 @@ func DeleteTodo(ctx *gin.Context, db *gorm.DB) {
 	db.Model(&model.Todo{}).Where("user_id = ? AND id = ?", curuser.ID, todotodel).Delete(&model.Todo{})
 	ctx.JSON(200, gin.H{
 		"Message": "Delete Successfully!",
+		"code":    model.SUCCESS,
+		"data":    gin.H{},
+	})
+}
+
+// Marked Todo
+func MarkedTodo(ctx *gin.Context, db *gorm.DB) {
+	// Get the todotodel ID
+	todoid := ctx.Param("todoid")
+
+	// Transform the todotodel ID to int
+	markid, _ := strconv.Atoi(todoid)
+
+	// Get the Current User
+	curuser := auth.GetCurrentUser(ctx, db)
+
+	// Marked the todo data
+	db.Model(&model.Todo{}).Where("user_id = ? AND id = ?", curuser.ID, markid).Update("is_completed", true)
+
+	ctx.JSON(200, gin.H{
+		"Message": "Marked Successfully!",
+		"code":    model.SUCCESS,
+		"data":    gin.H{},
+	})
+}
+
+// Unmarked Todo
+func UnmarkedTodo(ctx *gin.Context, db *gorm.DB) {
+	todoid := ctx.Param("todoid")
+
+	// Transform the todotodel ID to int
+	unmarkid, _ := strconv.Atoi(todoid)
+
+	// Get the Current User
+	curuser := auth.GetCurrentUser(ctx, db)
+
+	// Unmarked the todo data
+	db.Model(&model.Todo{}).Where("user_id = ? AND id = ?", curuser.ID, unmarkid).Update("is_completed", false)
+
+	ctx.JSON(200, gin.H{
+		"Message": "Unmarked Successfully!",
 		"code":    model.SUCCESS,
 		"data":    gin.H{},
 	})
