@@ -22,12 +22,10 @@
                                 </p>
                             </div>
                         </el-col>
-                        <el-col :span="1" class="mr">
-                            <router-link to="{ name: 'TodoView', params: {todoid: todo.ID} }">
+                        <el-col :span="1" class="mr">            
                                 <button @click="TodoDetail(todo.ID)" class="w-6 h-6 mt-4 border-2 rounded-full border-amber-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                                     <ExpandIcon />
                                 </button>
-                            </router-link>
                         </el-col>
                     </el-row>
                 </el-col>
@@ -80,6 +78,7 @@ import CheckIcon from '@/assets/icon/CheckIcon.vue'
 import DeleteIcon from '@/assets/icon/DeleteIcon.vue'
 import WithdrawIcon from '@/assets/icon/WithdrawIcon.vue'
 import ExpandIcon from '@/assets/icon/ExpandIcon.vue'
+// import { RouterLink } from 'vue-router'
 
 const todoStore = useTodoStore()
 const userStore = useUserStore()
@@ -137,7 +136,7 @@ const deleteTodo = async (todoid: number) => {
 }
 
 const TodoDetail = (todoid: number) => {
-    router.push({ name: 'Todo', params: { todoid } })
+    router.push({ name: 'TodoView', params: { todoid } })
 }
 
 // 钩子：组件挂载后获取所有待办事项
