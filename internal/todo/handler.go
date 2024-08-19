@@ -35,7 +35,9 @@ func AddTodo(ctx *gin.Context, db *gorm.DB) {
 		ctx.JSON(200, gin.H{
 			"Message": "The todo data has wrong!",
 			"code":    model.ERR_TODO_WRONG,
-			"data":    gin.H{},
+			"data": gin.H{
+				"todo": tododata,
+			},
 		})
 		return
 	}

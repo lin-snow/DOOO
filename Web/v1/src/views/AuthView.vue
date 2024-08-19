@@ -20,5 +20,4 @@ import UserRegister from '@/components/user/UserRegister.vue';
 import UserLogin from '@/components/user/UserLogin.vue';
 
 </script>
-
 <style scoped></style>

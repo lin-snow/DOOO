@@ -58,6 +58,8 @@ const AddTodo = async () => {
         return
     }
 
+    console.log(authToken)
+
     try {
         const response = await axios.post(
             'http://127.0.0.1:7879/api/add',
