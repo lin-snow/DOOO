@@ -3,7 +3,7 @@
         <div>
             <div class="grid place-items-center mb-4">
                 <button @click="UserAct()" class="rounded-full w-24 h-9 bg-sky-200 hover:shadow-md">
-                    <span class="text-blue-900"> 
+                    <span class="text-blue-400"> 
                         <el-icon>
                             <User />
                         </el-icon>
