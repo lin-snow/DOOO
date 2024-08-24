@@ -2,14 +2,12 @@
     <div class="right-side py-3 px-3 ">
         <div>
             <div class="grid place-items-center mb-4">
-                <router-link to="/auth" class="router-link">
-                    <el-button round size="large" color="#66b1ff" class="shadow-xl bg-sky-200 w-24">
+                    <el-button @click="UserAct()" round size="large" color="#66b1ff" class="shadow-xl bg-sky-200 w-24">
                         <el-icon>
                             <User />
                         </el-icon>
                         <span> User </span>
                     </el-button>
-                </router-link>
             </div>
         </div>
 
@@ -25,10 +23,17 @@
 
 <script setup lang="ts">
 import { User } from '@element-plus/icons-vue'
+import { useRouter } from 'vue-router'
 
 const src ='/vangoghmuseum-s0164V1962-800.jpg'
-
-
+const router = useRouter()
+function UserAct(){
+    if (localStorage.getItem('authToken')) {
+        router.push('/user')
+    } else {
+        router.push('/auth')
+    }
+}
 
 </script>
 

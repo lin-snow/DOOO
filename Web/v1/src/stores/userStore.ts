@@ -46,5 +46,22 @@ export const useUserStore = defineStore('user', () => {
 
     fetchUserInfo()
 
-    return { userInfo, setUserInfo, fetchUserInfo }
+    const logout = () => {
+        userInfo.value = {
+            UserID: 0,
+            Username: '',
+            Email: '',
+            Nickname: '',
+            Token: ''
+        }
+    }
+
+    return { userInfo, setUserInfo, fetchUserInfo, logout }
+},
+{
+    persist: {
+        key: 'userdata',
+        storage: localStorage,
+        paths: ['userInfo'],   
+    }
 })

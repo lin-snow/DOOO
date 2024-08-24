@@ -15,6 +15,7 @@ interface TodoModel {
 }
 
 export const useTodoStore = defineStore('allTodos', () => {
+
     // State
     const allTodos = ref<TodoModel[]>([])
     const loading = ref(true)
@@ -66,6 +67,18 @@ export const useTodoStore = defineStore('allTodos', () => {
         // fetchAllTodos()
     }
 
+    const clear = () => {
+        allTodos.value = []
+    }
 
-    return { allTodos, fetchAllTodos, loading, markAsCompleted, unMarkAsCompleted }
+
+    return { allTodos, fetchAllTodos, loading, markAsCompleted, unMarkAsCompleted, clear }
+},
+
+{
+    persist: {
+        key: 'alltododata',
+        storage: localStorage,
+        paths: ['allTodos'],   
+    }
 })

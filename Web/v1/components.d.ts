@@ -39,6 +39,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TodoDetail: typeof import('./src/components/todo/TodoDetail.vue')['default']
+    UserCenter: typeof import('./src/components/user/UserCenter.vue')['default']
     UserLogin: typeof import('./src/components/user/UserLogin.vue')['default']
     UserRegister: typeof import('./src/components/user/UserRegister.vue')['default']
   }

@@ -1,6 +1,5 @@
 <template>
     <div>
-        <h1>Login</h1>
         <!-- Login Form -->
         <form @submit.prevent="login" class="flex flex-col">
             <input type="text" class="border border-gray-300 p-2" placeholder="Username" v-model="loginInfo.username" autocomplete="username"/>

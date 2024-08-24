@@ -21,7 +21,7 @@ func CreateClaims(user model.User) jwt.Claims {
 			Issuer:    "lin-snow",
 			Subject:   "auth",
 			Audience:  jwt.ClaimStrings{"dooo"},
-			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24)),
+			ExpiresAt: jwt.NewNumericDate(time.Now().Add(time.Hour * 24 * 30)),
 			NotBefore: jwt.NewNumericDate(time.Now()),
 			IssuedAt:  jwt.NewNumericDate(time.Now()),
 		},
@@ -61,12 +61,12 @@ func ParseToken(token string) (*model.MyClaims, error) {
 
 	// Check the token
 	if err != nil { // If the token is invalid
-		log.Fatal(err)
+		log.Println(err)
 	} else if claims, ok := parsedtoken.Claims.(*model.MyClaims); ok { // verify the signature
 		fmt.Println(claims.Username, claims.RegisteredClaims.Issuer)
 		return claims, nil
 	} else {
-		log.Fatal("unknown claims type, cannot proceed") // If the token is invalid
+		log.Println("unknown claims type, cannot proceed") // If the token is invalid
 	}
 
 	return nil, nil
