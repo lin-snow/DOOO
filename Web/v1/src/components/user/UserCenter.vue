@@ -1,26 +1,36 @@
 <template>
-    <div>
-        <h1> User Center </h1>
-        <hr>
-        <h2>
-            <span class="text-red-400"> Username: </span>
-            {{ currentUser.Username }}
-        </h2>
-        <hr>
-        <p>
-            <span class="text-red-400"> Nickname: </span>
-            {{ currentUser.Nickname }}
-        </p>
-        <hr>
-        <p>
-            <span class="text-red-400"> Email: </span>
-            {{ currentUser.Email}}
-        </p>
-
-
-        <span>
-            <el-button @click="logout" type="primary" class="w-24 border rounded-md "> Logout </el-button>
+    <h1 class="text-center font-serif text-lg subpixel-antialiased text-amber-800 font-bold underline decoration-wavy underline-offset-8 my-2"> User Center </h1>
+    <div class="p-4">
+        <h1 class="my-2"> 
+        <span class="font-serif text-md subpixel-antialiased text-sky-300 font-bold underline underline-offset-8 block h-10">
+            UserName:
         </span>
+        <p class="p-1 border rounded-md border-amber-700 shadow-lg text-amber-900">
+            {{ currentUser.Username }}
+        </p> 
+        </h1>
+        <h1 class="my-2"> 
+            <span class="font-serif text-md subpixel-antialiased text-sky-300 font-bold underline underline-offset-8 block h-10">
+                NickName:
+            </span>
+            <p class="p-1 border rounded-md border-amber-700 shadow-lg text-amber-900">
+                {{ currentUser.Nickname }}
+            </p> 
+        </h1>
+        <h1 class="my-2"> 
+            <span class="font-serif text-md subpixel-antialiased text-sky-300 font-bold underline underline-offset-8 block h-10">
+                Email:
+            </span>
+            <p class="p-1 border rounded-md border-amber-700 shadow-lg text-amber-900">
+                {{ currentUser.Email }}
+            </p> 
+        </h1>
+    
+    
+        <!-- Logout -->
+        <div class="grid justify-items-center my-2">
+            <button @click="logout" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100"> Logout </button>
+        </div>
     </div>
 </template>
 

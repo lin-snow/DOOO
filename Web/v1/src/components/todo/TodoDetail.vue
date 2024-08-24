@@ -28,15 +28,12 @@
     <div class="grid justify-items-center my-2">
         <button @click="EditTodo(currentTodo.ID)" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100"> Edit </button>
     </div>
-    <!-- <el-button @click="EditTodo(currentTodo.ID)" type="primary" :icon="Edit" class="w-24 border rounded-md "> Edit Todo </el-button> -->
-    
-
 </template>
 
 <script setup lang="ts">
 import { useTodoStore } from '@/stores/todoStore';
 import { useRoute, useRouter } from 'vue-router';
-import { Edit } from '@element-plus/icons-vue';
+// import { Edit } from '@element-plus/icons-vue';
 
 const todoStore = useTodoStore();
 const route = useRoute();
