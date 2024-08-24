@@ -13,6 +13,8 @@ export const useUserStore = defineStore('user', () => {
         Token: ''
     })
 
+    const loginStatus = ref(true)
+
     // Actions
     function setUserInfo(user: {UserID: number; Username: string; Email: string; Nickname: string; Token: string }) {
         userInfo.value = user
@@ -38,6 +40,7 @@ export const useUserStore = defineStore('user', () => {
             userInfo.value.Nickname = response.data.data.nickname
             userInfo.value.Token = authToken
 
+            loginStatus.value = false
             // console.log('User Info:', userInfo.value)
         } catch (error) {
             console.error(error)
@@ -54,9 +57,10 @@ export const useUserStore = defineStore('user', () => {
             Nickname: '',
             Token: ''
         }
+        loginStatus.value = true
     }
 
-    return { userInfo, setUserInfo, fetchUserInfo, logout }
+    return { userInfo, loginStatus, setUserInfo, fetchUserInfo, logout }
 },
 {
     persist: {

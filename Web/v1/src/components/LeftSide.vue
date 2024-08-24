@@ -1,5 +1,5 @@
 <template>
-    <div class="left-side py-3 px-3">
+    <div class="left-side py-3 px-3 text-center">
         <!-- Logo -->
         <div class="grid place-items-center my-3">
             <el-col :span="12">
@@ -15,7 +15,7 @@
 
         <!-- NickName -->
         <div class="mb-4">
-            <span class="font-mono text-lg subpixel-antialiased italic font-medium text-slate-900">
+            <span class="font-mono text-lg subpixel-antialiased italic font-medium text-slate-900 ">
                 🫡 {{ userStore.userInfo.Nickname }}
             </span>
         </div>
@@ -23,13 +23,13 @@
         <!-- Add and Home -->
         <div class="grid place-items-center mb-4">
             <router-link to="/addtodo">
-                <el-button round size="large" color="#f78989" class="shadow-xl bg-red-400 w-20">
-                    Add
-                </el-button>
+                <button class="rounded-full w-20 h-9 bg-red-400 hover:shadow-md">
+                    <span class="text-red-950"> Add </span>
+                </button>
             </router-link>
         </div>
         <!-- All Categories -->
-        <div>
+        <!-- <div>
             <el-col :span="27">
                 <el-menu default-active="2" class="border rounded-lg overflow-hidden shadow-xl" @open="handleOpen" @close="handleClose">
                     <el-sub-menu index="1">
@@ -47,30 +47,19 @@
                     </el-sub-menu>
                 </el-menu>
             </el-col>
-        </div>
+        </div> -->
     </div>
 </template>
 
 <script setup lang="ts">
 import { reactive, toRefs } from 'vue'
-import { Files } from '@element-plus/icons-vue'
 import { useUserStore } from '@/stores/userStore'
 
 
 const state = reactive({
     circleUrl: 'https://linsnow.cn/img/avatar.png'
 })
-
 const { circleUrl } = toRefs(state)
-
-const handleOpen = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
-const handleClose = (key: string, keyPath: string[]) => {
-    console.log(key, keyPath)
-}
-
-
 const userStore = useUserStore()
 </script>
 

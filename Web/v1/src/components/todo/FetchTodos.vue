@@ -1,36 +1,44 @@
 <template>
-    <div v-if="todoStore.loading" class="text-center">Loading...</div>
+    <div v-if="userStore.loginStatus" class="text-center">
+        Please login to view your todos
+    </div>
     <el-scrollbar v-else>
-        <div v-for="todo in uncompletedTodos" :key="todo.ID" class="h-18">
-            <el-row class="alignment-container"> 
-                <el-col :span="2" class="mt-4">
-                    <!-- Mark as completed -->
-                    <button @click="markAsCompleted(todo.ID)" class="w-6 h-6 text-amber-900 border-2 rounded-full border-amber-900 ">
-                        <CheckIcon class="opacity-0 hover:opacity-100 transition-opacity duration-200"/>
-                    </button>
-                </el-col>
-                <!-- Show Todo -->
-                <el-col :span="20">
-                    <el-row class="group">
-                        <el-col :span="21" class="my-2 mx-2 rounded-lg p-2 border-2 shadow-sm border-amber-900 ">
-                            <div>
-                                <h3 class="text-amber-950 font-sans subpixel-antialiased truncate ... underline decoration-wavy underline-offset-3 h-auto">
-                                    {{ todo.title }}
-                                </h3>
-                                <p class="text-slate-400 font-light truncate ...">
-                                {{ todo.description }}
-                                </p>
-                            </div>
-                        </el-col>
-                        <el-col :span="1" class="mr">            
-                                <button @click="TodoDetail(todo.ID)" class="w-6 h-6 mt-4 border-2 rounded-full border-amber-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
-                                    <ExpandIcon />
-                                </button>
-                        </el-col>
-                    </el-row>
-                </el-col>
-            </el-row>
+        <div v-if="todoStore.loading">
+            Loading...
         </div>
+        <div v-else>
+            <div v-for="todo in uncompletedTodos" :key="todo.ID" class="h-18">
+                <el-row class="alignment-container"> 
+                    <el-col :span="2" class="mt-4">
+                        <!-- Mark as completed -->
+                        <button @click="markAsCompleted(todo.ID)" class="w-6 h-6 text-amber-900 border-2 rounded-full border-amber-900 ">
+                            <CheckIcon class="opacity-0 hover:opacity-100 transition-opacity duration-200"/>
+                        </button>
+                    </el-col>
+                    <!-- Show Todo -->
+                    <el-col :span="20">
+                        <el-row class="group">
+                            <el-col :span="21" class="my-2 mx-2 rounded-lg p-2 border-2 shadow-sm border-amber-900 ">
+                                <div>
+                                    <h3 class="text-amber-950 font-sans subpixel-antialiased truncate ... underline decoration-wavy underline-offset-8 h-8">
+                                        {{ todo.title }}
+                                    </h3>
+                                    <p class="text-slate-400 font-light truncate ...">
+                                        {{ todo.description }}
+                                    </p>
+                                </div>
+                            </el-col>
+                            <el-col :span="1" class="mr">            
+                                    <button @click="TodoDetail(todo.ID)" class="w-6 h-6 mt-4 border-2 rounded-full border-amber-900 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                                        <ExpandIcon />
+                                    </button>
+                            </el-col>
+                        </el-row>
+                    </el-col>
+                </el-row>
+            </div>
+        </div>
+        
 
         <hr class="border-2 border-dotted">
 
@@ -69,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, computed } from 'vue'
+import { computed, onMounted } from 'vue'
 import { useTodoStore } from '@/stores/todoStore'
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
@@ -78,7 +86,7 @@ import CheckIcon from '@/assets/icon/CheckIcon.vue'
 import DeleteIcon from '@/assets/icon/DeleteIcon.vue'
 import WithdrawIcon from '@/assets/icon/WithdrawIcon.vue'
 import ExpandIcon from '@/assets/icon/ExpandIcon.vue'
-// import { RouterLink } from 'vue-router'
+
 
 const todoStore = useTodoStore()
 const userStore = useUserStore()
@@ -140,7 +148,7 @@ const TodoDetail = (todoid: number) => {
 }
 
 // 钩子：组件挂载后获取所有待办事项
-onBeforeMount(() => {
+onMounted(() => {
     todoStore.fetchAllTodos()
 })
 </script>

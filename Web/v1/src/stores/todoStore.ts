@@ -69,6 +69,7 @@ export const useTodoStore = defineStore('allTodos', () => {
 
     const clear = () => {
         allTodos.value = []
+        loading.value = true
     }
 
 

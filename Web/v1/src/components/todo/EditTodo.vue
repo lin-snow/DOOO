@@ -4,25 +4,22 @@
 
         <form @submit.prevent="EditTodo">
             <div class="my-2">
-                <input v-model="form.Title" type="text" class="border border-gray-300 p-2" placeholder="Title" />
+                <span>Title:</span>
+                <br>
+                <textarea v-model="form.Title" ref="titlearea" type="text" class="border rounded-lg border-neutral-400  p-2 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 outline-none focus:border-2" placeholder="Title"></textarea>
             </div>
             <div class="mb-2">
-                <input v-model="form.Description" type="text" class="border border-gray-300 p-2" placeholder="Description" />
+                <span>Description:</span>
+                <br>
+                <textarea v-model="form.Description" ref="desarea" type="text" class="border rounded-lg border-neutral-400  p-2 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 outline-none focus:border-2" placeholder="Description"></textarea>
             </div>
-            <!-- <div class="mb-2">
-                <input v-model="form.Category" type="text" class="border border-gray-300 p-2" placeholder="Category" />
-            </div> -->
-            <!-- <div class="mb-2">
-                <input v-model="form.DueDate" type="date" class="border border-gray-300 p-2" placeholder="Due Date" />
-            </div> -->
-
-            <button type="submit" class="bg-blue-500 text-white p-2">Update Todo</button>
+            <button type="submit" class="border-2 rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-rose-300"> Update </button>
         </form>
     </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 import { useTodoStore } from '@/stores/todoStore'
 import { useUserStore } from '@/stores/userStore'
@@ -76,4 +73,29 @@ const EditTodo = async () => {
     }
 }
 
+
+const titlearea = ref<HTMLTextAreaElement | null>(null);
+const desarea = ref<HTMLTextAreaElement | null>(null);
+
+const resizeTextarea = (autosizeTextarea: any) => {
+    if (autosizeTextarea.value) {
+    autosizeTextarea.value.style.height = '2.5rem'; // 重置高度
+    autosizeTextarea.value.style.height = autosizeTextarea.value.scrollHeight + 'px'; // 根据内容设置高度
+    }
+};
+
+onMounted(() => {
+  // 初始调整高度
+    resizeTextarea(titlearea);
+    resizeTextarea(desarea);
+});
+
+// 监听表单数据变化，以便在数据变化时调整高度
+watch(() => form.value.Title, () => {
+    resizeTextarea(titlearea);
+});
+
+watch(() => form.value.Description, () => {
+    resizeTextarea(desarea);
+});
 </script>
