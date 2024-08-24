@@ -1,20 +1,21 @@
 <template>
-    <div class="w-full">
-        <h1>Edit Todo</h1>
-
-        <form @submit.prevent="EditTodo">
-            <div class="my-2">
-                <span>Title:</span>
-                <br>
-                <textarea v-model="form.Title" ref="titlearea" type="text" class="border rounded-lg border-neutral-400  p-2 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 outline-none focus:border-2" placeholder="Title"></textarea>
-            </div>
-            <div class="mb-2">
-                <span>Description:</span>
-                <br>
-                <textarea v-model="form.Description" ref="desarea" type="text" class="border rounded-lg border-neutral-400  p-2 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 outline-none focus:border-2" placeholder="Description"></textarea>
-            </div>
-            <button type="submit" class="border-2 rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-rose-200"> Update </button>
-        </form>
+    <div>
+        <h1 class="text-center font-serif text-lg subpixel-antialiased text-amber-800 font-bold underline decoration-wavy underline-offset-8 my-2">Edit Todo</h1>
+        <div class="m-4">
+            <form @submit.prevent="EditTodo">
+                <div class="my-2">
+                    <span class="font-serif text-md subpixel-antialiased text-black font-bold underline underline-offset-8 block h-8">Title:</span>
+                    <textarea v-model="form.Title" ref="titlearea" type="text" class="w-full border rounded-lg border-neutral-400 outline-none bg-amber-50 p-1 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 focus:border-2 focus:bg-white" placeholder="Title"></textarea>
+                </div>
+                <div class="mb-2">
+                    <span class="font-serif text-md subpixel-antialiased text-black font-bold underline underline-offset-8 block h-8">Description:</span>
+                    <textarea v-model="form.Description" ref="desarea" type="text" class="w-full border rounded-lg border-neutral-400 outline-none bg-amber-50 p-1 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 focus:border-2 focus:bg-white" placeholder="Description"></textarea>
+                </div>
+                <div class="grid justify-items-center my-2">
+                    <button type="submit" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-rose-200"> Update </button>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -79,7 +80,7 @@ const desarea = ref<HTMLTextAreaElement | null>(null);
 
 const resizeTextarea = (autosizeTextarea: any) => {
     if (autosizeTextarea.value) {
-    autosizeTextarea.value.style.height = '2.5rem'; // 重置高度
+    autosizeTextarea.value.style.height = '2.3rem'; // 重置高度
     autosizeTextarea.value.style.height = autosizeTextarea.value.scrollHeight + 'px'; // 根据内容设置高度
     }
 };

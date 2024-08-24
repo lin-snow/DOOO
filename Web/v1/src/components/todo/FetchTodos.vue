@@ -23,7 +23,7 @@
                                     <h3 class="text-amber-950 font-sans subpixel-antialiased truncate ... underline decoration-wavy underline-offset-8 h-8">
                                         {{ todo.title }}
                                     </h3>
-                                    <p class="text-slate-400 font-light truncate ...">
+                                    <p class="text-slate-500 font-light truncate ...">
                                         {{ todo.description }}
                                     </p>
                                 </div>

@@ -7,7 +7,7 @@
                 <span class="font-serif text-md subpixel-antialiased text-black font-bold underline underline-offset-8 block h-10">
                     Title:
                 </span>
-                <p class="p-1 border-2 rounded-md border-amber-700 shadow-lg text-amber-900">
+                <p class="p-1 border rounded-md border-amber-700 shadow-lg text-amber-900">
                     {{ currentTodo.title }}
                 </p> 
             </h1>
@@ -16,17 +16,17 @@
                 <span class="font-serif text-md subpixel-antialiased text-black font-bold underline underline-offset-8 block h-10">
                     Description:
                 </span>
-                <p class="p-1 border-2 rounded-md border-amber-700 shadow-lg text-amber-900">
+                <p class="p-1 border rounded-md border-amber-700 shadow-lg text-amber-900">
                     {{ currentTodo.description }}
                 </p> 
             </h1>
         </div>
     </div>
-    <hr>
+    
     
     <!-- Edit Todo -->
     <div class="grid justify-items-center my-2">
-        <button @click="EditTodo(currentTodo.ID)" class="border-2 rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100"> Edit </button>
+        <button @click="EditTodo(currentTodo.ID)" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100"> Edit </button>
     </div>
     <!-- <el-button @click="EditTodo(currentTodo.ID)" type="primary" :icon="Edit" class="w-24 border rounded-md "> Edit Todo </el-button> -->
     
