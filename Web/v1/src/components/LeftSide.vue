@@ -15,8 +15,8 @@
 
         <!-- NickName -->
         <div class="mb-4">
-            <span class="font-mono text-lg subpixel-antialiased italic font-medium text-slate-900 ">
-                🫡 {{ userStore.userInfo.Nickname }}
+            <span class="font-mono text-lg subpixel-antialiased italic font-bold text-slate-900 ">
+                {{ userStore.userInfo.Nickname }}
             </span>
         </div>
 

@@ -13,7 +13,7 @@
                 <br>
                 <textarea v-model="form.Description" ref="desarea" type="text" class="border rounded-lg border-neutral-400  p-2 shadow-inner my-2 overflow-y-hidden resize-none focus:border-amber-800 outline-none focus:border-2" placeholder="Description"></textarea>
             </div>
-            <button type="submit" class="border-2 rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-rose-300"> Update </button>
+            <button type="submit" class="border-2 rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-rose-200"> Update </button>
         </form>
     </div>
 </template>
