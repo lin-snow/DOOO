@@ -2,6 +2,8 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '@/views/HomeView.vue'
 import User from '@/views/UserView.vue'
 import Auth from '@/views/AuthView.vue'
+import Login from '@/views/LoginView.vue'
+import Register from '@/views/RegisterView.vue'
 import About from '@/views/AboutView.vue'
 import AddTodo from '@/views/AddTodoView.vue'
 import EditTodo from '@/views/EditTodoView.vue'
@@ -14,6 +16,8 @@ const router = createRouter({
         { path: '/', name: 'Home', component: Home},
         { path: '/user', name: 'User', component: User},
         { path: '/auth', name: 'Auth', component: Auth },
+        { path: '/login', name: 'Login', component: Login},
+        { path: '/register', name: 'Register', component: Register},
         { path: '/about', name: 'About', component: About},
         { path: '/addtodo', name: 'AddTodo', component: AddTodo},
         { path: '/todo/:todoid', name: 'TodoView', component: TodoView },

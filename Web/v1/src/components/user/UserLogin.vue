@@ -1,12 +1,24 @@
 <template>
     <div>
-        <!-- Login Form -->
-        <form @submit.prevent="login" class="flex flex-col">
-            <input type="text" class="border border-gray-300 p-2" placeholder="Username" v-model="loginInfo.username" autocomplete="username"/>
-            <input type="password" class="border border-gray-300 p-2" placeholder="Password"
-                v-model="loginInfo.password" autocomplete="current-password"/>
-            <button type="submit" class="bg-blue-500 text-white p-2">Login</button>
-        </form>
+        <h1 class="text-center font-mono text-lg subpixel-antialiased text-amber-800 font-bold underline decoration-wavy underline-offset-8"> Login </h1>
+        <div class="p-4 flex items-center justify-center">
+            <form @submit.prevent="login" class="flex flex-col ">
+                <!-- Username -->
+                <div class="my-2">
+                    <span class="mx-4"> Username: </span>
+                    <input type="text" class="border border-gray-300 p-2" placeholder="Username" v-model="loginInfo.username" autocomplete="username"/>
+                </div>
+                <!-- Password -->
+                <div class="my-2">
+                    <span class="mx-5"> Password: </span>
+                    <input type="password" class="border border-gray-300 p-2" placeholder="Password" v-model="loginInfo.password" autocomplete="current-password"/>
+                </div>
+                <!-- Submit -->
+                <div class="flex items-center justify-center my-2">
+                    <button type="submit" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100">Login</button>
+                </div>           
+            </form>
+        </div>
     </div>
 </template>
 
