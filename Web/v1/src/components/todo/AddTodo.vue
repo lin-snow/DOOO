@@ -20,9 +20,11 @@
 import { ref, onMounted, watch } from 'vue'
 import { apiClient } from '@/utils/axios/axios'
 import { useUserStore } from '@/stores/userStore';
-import router from '@/router';
+import { useRouter } from 'vue-router'
+
 
 const userStore = useUserStore()
+const router = useRouter()
 
 interface TodoForm {
     UserID: number
@@ -50,6 +52,7 @@ const AddTodo = async () => {
     )
 
         console.log('Response Data:', response.data)
+        
         router.push('/')
     } catch (error) {
         console.error('Error adding todo:', error)
