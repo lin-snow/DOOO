@@ -15,7 +15,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import axios from 'axios'
+import { authClient } from '@/utils/axios/axios'
 import { useRouter } from 'vue-router'
 
 
@@ -30,9 +30,9 @@ const UserInfo = reactive({
 
 const register = async () => {
     try {
-        const response = await axios.post('http://127.0.0.1:7879/signup', UserInfo);
-        // 假设后端返回token
-        localStorage.setItem('authToken', response.data.token);
+        const response = await authClient.post('/signup', UserInfo);
+        
+        console.log('Response:', response);
 
         // 重定向到登录页面或主页
         router.push('/auth');

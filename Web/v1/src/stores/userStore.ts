@@ -1,7 +1,7 @@
 // Store Current User Information
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios'
+import { apiClient } from '@/utils/axios/axios'
 
 export const useUserStore = defineStore('user', () => {
     // State
@@ -21,24 +21,14 @@ export const useUserStore = defineStore('user', () => {
     }
 
     const fetchUserInfo = async () => {
-        const authToken = localStorage.getItem('authToken')
-        if (!authToken) {
-            console.error('No auth token found')
-            return
-        }
-
         try {
-            const response = await axios.get('http://127.0.0.1:7879/api/getuserinfo', {
-                headers: {
-                    'Authorization': `Bearer ${ authToken }` // 添加 token 到请求头中
-                }  
-            })
+            const response = await apiClient.get('/getuserinfo')
             // Set UserInfo
             userInfo.value.UserID = response.data.data.userid
             userInfo.value.Username = response.data.data.username
             userInfo.value.Email = response.data.data.email
             userInfo.value.Nickname = response.data.data.nickname
-            userInfo.value.Token = authToken
+            userInfo.value.Token = localStorage.getItem('authToken') || ''
 
             loginStatus.value = false
             // console.log('User Info:', userInfo.value)

@@ -81,7 +81,7 @@ import { computed, onMounted } from 'vue'
 import { useTodoStore } from '@/stores/todoStore'
 import { useUserStore } from '@/stores/userStore'
 import { useRouter } from 'vue-router'
-import axios from 'axios'
+import { apiClient } from '@/utils/axios/axios'
 import CheckIcon from '@/assets/icon/CheckIcon.vue'
 import DeleteIcon from '@/assets/icon/DeleteIcon.vue'
 import WithdrawIcon from '@/assets/icon/WithdrawIcon.vue'
@@ -101,11 +101,7 @@ const completedTodos = computed(() => todoStore.allTodos.filter((todo) => todo.i
 // Mark a todo as completed
 const markAsCompleted = async (todoid: number) => {
     try {
-        await axios.put(`http://localhost:7879/api/markedtodo/${todoid}`,null, {
-            headers: {
-                Authorization: `Bearer ${ userStore.userInfo.Token }`
-            }
-        })
+        await apiClient.put(`/markedtodo/${todoid}`,null)
     } catch (error) {
         console.error(error)
     }
@@ -115,11 +111,7 @@ const markAsCompleted = async (todoid: number) => {
 // Withdraw a mark
 const withDrawMark = async (todoid: number) => {
     try {
-        const response = await axios.put(`http://localhost:7879/api/unmarkedtodo/${todoid}`,null, {
-            headers: {
-                Authorization: `Bearer ${ userStore.userInfo.Token }`
-            }
-        })
+        const response = await apiClient.put(`/unmarkedtodo/${todoid}`,null)
         console.log(response.data)
     } catch (error) {
         console.error(error)
@@ -130,11 +122,7 @@ const withDrawMark = async (todoid: number) => {
 
 const deleteTodo = async (todoid: number) => {
     try {
-        const response = await axios.delete(`http://localhost:7879/api/deletetodo/${todoid}`, {
-            headers: {
-                Authorization: `Bearer ${ userStore.userInfo.Token }`
-            }
-        })
+        const response = await apiClient.delete(`/deletetodo/${todoid}`)
         console.log(response.data)
     } catch (error) {
         console.error(error)

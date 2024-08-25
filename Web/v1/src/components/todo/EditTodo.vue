@@ -24,7 +24,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router'
 import { useTodoStore } from '@/stores/todoStore'
 import { useUserStore } from '@/stores/userStore'
-import axios from 'axios'
+import { apiClient } from '@/utils/axios/axios'
 
 
 interface TodoForm {
@@ -58,14 +58,9 @@ console.log(todoid.value)
 
 const EditTodo = async () => {
     try {
-        const response = await axios.put('http://localhost:7879/api/updatetodo', 
-        form.value,
-        {
-            headers: {
-                Authorization: `Bearer ${ userStore.userInfo.Token }`
-            }
-        })
-        // console.log(form.value)
+        const response = await apiClient.put('/updatetodo', 
+        form.value)
+        
         console.log(response.data)
 
         // todoStore.fetchAllTodos()

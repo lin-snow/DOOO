@@ -1,7 +1,7 @@
 // Store Current User's All Todos
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios'
+import { apiClient } from '@/utils/axios/axios'
 
 
 interface TodoModel {
@@ -19,16 +19,13 @@ export const useTodoStore = defineStore('allTodos', () => {
     // State
     const allTodos = ref<TodoModel[]>([])
     const loading = ref(true)
-    const token = localStorage.getItem('authToken')
+    
 
 
     // Actions
     const fetchAllTodos = async () => {
         try {
-            const response = await axios.get('http://localhost:7879/api/querytodo', {
-                headers: {
-                    'Authorization': `Bearer ${ token }` // 添加 token 到请求头中
-                },
+            const response = await apiClient.get('/querytodo', {
                 params: {
                     pageSize: '-1',
                     pageNum: '-1'

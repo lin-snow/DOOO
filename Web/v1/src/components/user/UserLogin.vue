@@ -24,7 +24,7 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import axios from 'axios'
+import { authClient } from '@/utils/axios/axios'
 import { useRouter } from 'vue-router'
 import { useUserStore } from '@/stores/userStore';
 
@@ -37,7 +37,7 @@ const loginInfo = reactive({
 
 const login = async () => {
     try {
-        const response = await axios.post('http://127.0.0.1:7879/login', loginInfo);
+        const response = await authClient.post('/login', loginInfo);
 
         // Debug: Print response to check if token is received
         console.log('Response Status:', response.status);

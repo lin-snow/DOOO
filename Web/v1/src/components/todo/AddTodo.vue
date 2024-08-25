@@ -18,7 +18,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, watch } from 'vue'
-import axios from 'axios'
+import { apiClient } from '@/utils/axios/axios'
 import { useUserStore } from '@/stores/userStore';
 import router from '@/router';
 
@@ -43,24 +43,11 @@ const form = ref<TodoForm>({
 })
 
 const AddTodo = async () => {
-    const authToken = userStore.userInfo.Token
-    if (!authToken) {
-        console.error('No auth token found')
-        return
-    }
-
-    console.log(authToken)
-
     try {
-        const response = await axios.post(
-            'http://127.0.0.1:7879/api/add',
-            form.value, // 传递表单数据
-            {
-                headers: {
-                    'Authorization': `Bearer ${authToken}` // 添加 token 到请求头中
-                }  
-            }
-        )
+        const response = await apiClient.post(
+            '/add',
+            form.value // 传递表单数据
+    )
 
         console.log('Response Data:', response.data)
         router.push('/')

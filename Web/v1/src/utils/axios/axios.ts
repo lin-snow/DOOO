@@ -22,8 +22,8 @@ const apiClient = axios.create({
 
 // Add a interceptor to the axios instance
 apiClient.interceptors.request.use(
-    // Dynamically set the Content-Type header
     (config) => {
+        // Dynamically set the Content-Type header
         if (config.data) {
             if (config.data instanceof FormData) {
                 config.headers['Content-Type'] = 'multipart/form-data'
@@ -32,6 +32,16 @@ apiClient.interceptors.request.use(
             } else {
                 config.headers['Content-Type'] = 'application/json'
             }
+        }
+
+        // Auto add the token to the header
+        const token = localStorage.getItem('authToken')
+        if (!token) {
+            console.error('No token found!!!')
+        }
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`
         }
         
         return config
