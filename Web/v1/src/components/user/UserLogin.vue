@@ -5,12 +5,12 @@
             <form @submit.prevent="login" class="flex flex-col ">
                 <!-- Username -->
                 <div class="my-2">
-                    <span class="font-serif text-md subpixel-antialiased text-black font-bold mx-4"> Username: </span>
+                    <!-- <span class="font-serif text-md subpixel-antialiased text-black font-bold mx-4"> Username: </span> -->
                     <input type="text" class="border rounded-lg border-neutral-400 w-44 p-2 shadow-inner my-2 overflow-y-hidden focus:border-amber-800 outline-none focus:border-2" placeholder="Username" v-model="loginInfo.username" autocomplete="username"/>
                 </div>
                 <!-- Password -->
                 <div class="my-2">
-                    <span class="font-serif text-md subpixel-antialiased text-black font-bold mx-5"> Password: </span>
+                    <!-- <span class="font-serif text-md subpixel-antialiased text-black font-bold mx-5"> Password: </span> -->
                     <input type="password" class="border rounded-lg border-neutral-400 w-44 p-2 shadow-inner my-2 overflow-y-hidden focus:border-amber-800 outline-none focus:border-2" placeholder="Password" v-model="loginInfo.password" autocomplete="current-password"/>
                 </div>
                 <!-- Submit -->
