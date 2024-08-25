@@ -11,7 +11,7 @@ import TodoView from '@/views/TodoView.vue'
 
 // import.meta.env.BASE_URL
 const router = createRouter({
-    history: createWebHistory('/'),
+    history: createWebHistory(import.meta.env.BASE_URL),
     routes: [
         { path: '/', name: 'Home', component: Home},
         { path: '/user', name: 'User', component: User},

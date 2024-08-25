@@ -1,0 +1,16 @@
+# Server
+Server:
+  listen: "7879"
+
+# Database
+Database:
+  dbtype: "mysql"
+  user: "root"
+  password: "041107@L1nSn0w"  
+  host: "localhost"
+  port: "3306"
+  dbname: "dooo"
+
+# Web
+WebPath: 
+  dist: "./Web/v1/dist"
