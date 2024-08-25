@@ -3,8 +3,8 @@
         Please login to view your todos
     </div>
     <el-scrollbar v-else>
-        <div v-if="todoStore.loading">
-            Loading...
+        <div v-if="todoStore.loading" class="text-center">
+            loading...
         </div>
         <div v-else>
             <div v-for="todo in uncompletedTodos" :key="todo.ID" class="h-18">

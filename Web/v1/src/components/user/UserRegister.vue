@@ -1,7 +1,7 @@
 <template>
     <div class="p-2">
         <h1 class="text-center font-mono text-lg subpixel-antialiased text-amber-800 font-bold underline decoration-wavy underline-offset-8 my-4"> Register </h1>
-        <div class="flex flex-col">
+        <form @submit.prevent="register" class="flex flex-col">
             <input type="text" class="border rounded-lg border-neutral-400 w-44 p-2 shadow-inner my-2 overflow-y-hidden focus:border-amber-800 outline-none focus:border-2" placeholder="Username" v-model="UserInfo.username" />
             <input type="email" class="border rounded-lg border-neutral-400 w-44 p-2 shadow-inner my-2 overflow-y-hidden focus:border-amber-800 outline-none focus:border-2" placeholder="Email" v-model="UserInfo.email" />
             <input type="password" class="border rounded-lg border-neutral-400 w-44 p-2 shadow-inner my-2 overflow-y-hidden focus:border-amber-800 outline-none focus:border-2" placeholder="Password" v-model="UserInfo.password" autocomplete="new-password"/>
@@ -9,7 +9,7 @@
             <div class="flex items-center justify-center my-2">
                 <button type="submit" class="border rounded-xl border-amber-700 shadow-lg p-2 w-20 text-black font-medium hover:bg-sky-100">SignUp</button>
             </div>  
-        </div>
+        </form>
     </div>
 </template>
 
