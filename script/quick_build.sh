@@ -3,6 +3,9 @@
 # clean the app directory
 cd ../app && rm -rf ./*
 
+# add dist directory
+mkdir dist
+
 # build Frontend Directory
 cd ../Web/v1
 
