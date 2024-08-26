@@ -3,8 +3,8 @@
 # clean the app directory
 cd ../app && rm -rf ./*
 
-# add dist directory
-mkdir dist
+# add dist & config directory
+mkdir dist && mkdir config
 
 # build Frontend Directory
 cd ../Web/v1
@@ -16,7 +16,10 @@ npm run build
 cp -r dist/* ../../app/dist
 
 # build Backend Directory
-cd ../../ 
+cd ../../
+
+# copy config file to app directory
+cp config/config.yaml app/config
 
 # build Backend
 go build main.go
