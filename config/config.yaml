@@ -5,8 +5,8 @@ Server:
 # Database
 Database:
   dbtype: "mysql"
-  user: "root"
-  password: "041107@L1nSn0w"  
+  user: "dooo"
+  password: "114514"  
   host: "localhost"
   port: "3306"
   dbname: "dooo"
