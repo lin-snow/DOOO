@@ -53,6 +53,9 @@ docs/_book
 # TODO: where does this rule come from?
 test/
 
+# app
+app
+
 ### Vuejs ###
 # Recommended template: Node.gitignore
 
