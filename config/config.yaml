@@ -13,4 +13,4 @@ Database:
 
 # Web
 WebPath: 
-  dist: "./Web/v1/dist"
+  dist: "./dist"
